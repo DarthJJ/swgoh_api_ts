@@ -1,4 +1,4 @@
-import { BaseException } from "./baseException.js";
+import { BaseException } from "./baseException";
 
 export class SerializeException extends BaseException {
   constructor(message: string, originalError: unknown) {

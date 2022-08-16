@@ -1,5 +1,5 @@
-import { BaseModel } from "./baseModel.js";
-import { GearLevel } from "./gearLevel.js";
+import { BaseModel } from "./baseModel";
+import { GearLevel } from "./gearLevel";
 
 export class Character extends BaseModel {
   private _name: string;

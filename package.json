@@ -5,12 +5,20 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest --config jestconfig.json"
   },
   "dependencies": {
     "tsyringe": "^4.7.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/jest": "^28.1.7",
+    "@types/node": "^18.7.5",
+    "jest": "^28.1.3",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.7.4"
+  },
   "repository": "git+https://github.com/DarthJJ/swgoh_api_ts.git",
   "author": "Darth JarJar",
   "license": "MIT",

@@ -1,12 +1,13 @@
-import { NoDataException } from "../exceptions/noDataException.js";
-import { RetrieveException } from "../exceptions/retrieveException.js";
-import { SerializeException } from "../exceptions/serializeException.js";
-import { BaseModel } from "../models/baseModel.js";
-import { Character } from "../models/character.js";
-import { EndPoints } from "./endPoints.js";
+import "reflect-metadata";
+import { NoDataException } from "../exceptions/noDataException";
+import { RetrieveException } from "../exceptions/retrieveException";
+import { SerializeException } from "../exceptions/serializeException";
+import { BaseModel } from "../models/baseModel";
+import { Character } from "../models/character";
+import { EndPoints } from "./endPoints";
 import { injectable } from "tsyringe";
-import { Ship } from "../models/ship.js";
-import { Ability } from "../models/ability.js";
+import { Ship } from "../models/ship";
+import { Ability } from "../models/ability";
 
 @injectable()
 export class Retriever {
@@ -39,7 +40,10 @@ export class Retriever {
     });
   }
 
-  private transformData<T extends BaseModel>(data: object[], type: new () => T): T[] {
+  private transformData<T extends BaseModel>(
+    data: object[],
+    type: new () => T
+  ): T[] {
     if (!data || data.length! < 1) {
       throw new NoDataException("The retrieved data is empty");
     }

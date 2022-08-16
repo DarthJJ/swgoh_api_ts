@@ -1,4 +1,4 @@
-import { BaseModel } from "./baseModel.js";
+import { BaseModel } from "./baseModel";
 
 export class Ship extends BaseModel {
   private _name: string;
