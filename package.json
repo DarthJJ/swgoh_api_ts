@@ -1,6 +1,6 @@
 {
   "name": "swgoh_api_ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A TS Librarty for interacting with the https://swgoh.gg API ",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,9 +8,7 @@
     "build": "tsc",
     "test": "jest --config jestconfig.json"
   },
-  "dependencies": {
-    "tsyringe": "^4.7.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^28.1.7",
     "@types/node": "^18.7.5",
