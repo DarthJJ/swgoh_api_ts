@@ -1,0 +1,25 @@
+{
+  "name": "swgoh_api_ts",
+  "version": "1.0.0",
+  "description": "A TS Librarty for interacting with the https://swgoh.gg API ",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "tsyringe": "^4.7.0"
+  },
+  "devDependencies": {},
+  "repository": "git+https://github.com/DarthJJ/swgoh_api_ts.git",
+  "author": "Darth JarJar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DarthJJ/swgoh_api_ts/issues"
+  },
+  "homepage": "https://github.com/DarthJJ/swgoh_api_ts#readme",
+  "private": false,
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
