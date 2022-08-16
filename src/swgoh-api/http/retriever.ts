@@ -5,11 +5,9 @@ import { SerializeException } from "../exceptions/serializeException";
 import { BaseModel } from "../models/baseModel";
 import { Character } from "../models/character";
 import { EndPoints } from "./endPoints";
-import { injectable } from "tsyringe";
 import { Ship } from "../models/ship";
 import { Ability } from "../models/ability";
 
-@injectable()
 export class Retriever {
   private readonly baseApiUrl: string = "https://swgoh.gg/api/";
 
