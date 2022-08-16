@@ -1,4 +1,4 @@
-import { BaseModel } from "./baseModel";
+import { BaseModel } from "../baseModel";
 import { GearLevel } from "./gearLevel";
 
 export class Character extends BaseModel {

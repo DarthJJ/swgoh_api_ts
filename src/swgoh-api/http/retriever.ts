@@ -3,30 +3,38 @@ import { NoDataException } from "../exceptions/noDataException";
 import { RetrieveException } from "../exceptions/retrieveException";
 import { SerializeException } from "../exceptions/serializeException";
 import { BaseModel } from "../models/baseModel";
-import { Character } from "../models/character";
+import { Character } from "../models/static/character";
 import { EndPoints } from "./endPoints";
-import { Ship } from "../models/ship";
-import { Ability } from "../models/ability";
+import { Ship } from "../models/static/ship";
+import { Ability } from "../models/static/ability";
+import { Player } from "../models/player/player";
 
 export class Retriever {
   private readonly baseApiUrl: string = "https://swgoh.gg/api/";
 
-  public async getCharacters(): Promise<Character[]> {
+  public async player(allycode: number): Promise<Player> {
+    const endPoint =
+      this.baseApiUrl + EndPoints.PLAYER.replace("$1", allycode.toString());
+    const data = await this.apiCall(endPoint);
+    return this.transformData<Player>(data, Player);
+  }
+
+  public async characters(): Promise<Character[]> {
     const endpoint = this.baseApiUrl + EndPoints.CHARACTERS;
     const data = await this.apiCall(endpoint);
-    return this.transformData<Character>(data, Character);
+    return this.transformArrayData<Character>(data, Character);
   }
 
-  public async getShips(): Promise<Ship[]> {
+  public async ships(): Promise<Ship[]> {
     const endpoint = this.baseApiUrl + EndPoints.SHIPS;
     const data = await this.apiCall(endpoint);
-    return this.transformData<Ship>(data, Ship);
+    return this.transformArrayData<Ship>(data, Ship);
   }
 
-  public async getAbilities(): Promise<Ability[]> {
+  public async abilities(): Promise<Ability[]> {
     const endpoint = this.baseApiUrl + EndPoints.ABILITIES;
     const data = await this.apiCall(endpoint);
-    return this.transformData<Ability>(data, Ability);
+    return this.transformArrayData<Ability>(data, Ability);
   }
 
   private async apiCall(url: string): Promise<object[]> {
@@ -37,8 +45,21 @@ export class Retriever {
       return response.json();
     });
   }
-
   private transformData<T extends BaseModel>(
+    data: object,
+    type: new () => T
+  ): T {
+    if (!data) {
+      throw new NoDataException("The retrieved data is empty");
+    }
+    try {
+      return new type().createFromJSON(data);
+    } catch (exception: unknown) {
+      throw new SerializeException("Error Serializing data", exception);
+    }
+  }
+
+  private transformArrayData<T extends BaseModel>(
     data: object[],
     type: new () => T
   ): T[] {

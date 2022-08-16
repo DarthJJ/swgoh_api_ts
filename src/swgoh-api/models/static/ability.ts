@@ -1,4 +1,4 @@
-import { BaseModel } from "./baseModel";
+import { BaseModel } from "../baseModel";
 
 export class Ability extends BaseModel {
   private _base_id: string;
