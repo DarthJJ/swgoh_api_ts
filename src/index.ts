@@ -1,1 +1,2 @@
-export { Retriever } from "./swgoh-api/http/retriever";
+export { Config } from "./config";
+export { SwgohApi } from "./swgohApi";

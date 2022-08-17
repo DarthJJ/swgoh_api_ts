@@ -1,20 +1,19 @@
 import "reflect-metadata";
-import { NoDataException } from "../exceptions/noDataException";
-import { RetrieveException } from "../exceptions/retrieveException";
-import { SerializeException } from "../exceptions/serializeException";
-import { BaseModel } from "../models/baseModel";
-import { Character } from "../models/static/character";
+import { NoDataException } from "../../exceptions/noDataException";
+import { RetrieveException } from "../../exceptions/retrieveException";
+import { SerializeException } from "../../exceptions/serializeException";
+import { BaseModel } from "../apiModels/baseModel";
+import { Character } from "../apiModels/static/character";
 import { EndPoints } from "./endPoints";
-import { Ship } from "../models/static/ship";
-import { Ability } from "../models/static/ability";
-import { Player } from "../models/player/player";
+import { Ship } from "../apiModels/static/ship";
+import { Ability } from "../apiModels/static/ability";
+import { Player } from "../apiModels/player/player";
 
 export class Retriever {
   private readonly baseApiUrl: string = "https://swgoh.gg/api/";
 
   public async player(allycode: number): Promise<Player> {
-    const endPoint =
-      this.baseApiUrl + EndPoints.PLAYER.replace("$1", allycode.toString());
+    const endPoint = this.baseApiUrl + EndPoints.PLAYER.replace("$1", allycode.toString());
     const data = await this.apiCall(endPoint);
     return this.transformData<Player>(data, Player);
   }
@@ -45,10 +44,7 @@ export class Retriever {
       return response.json();
     });
   }
-  private transformData<T extends BaseModel>(
-    data: object,
-    type: new () => T
-  ): T {
+  private transformData<T extends BaseModel>(data: object, type: new () => T): T {
     if (!data) {
       throw new NoDataException("The retrieved data is empty");
     }
@@ -59,10 +55,7 @@ export class Retriever {
     }
   }
 
-  private transformArrayData<T extends BaseModel>(
-    data: object[],
-    type: new () => T
-  ): T[] {
+  private transformArrayData<T extends BaseModel>(data: object[], type: new () => T): T[] {
     if (!data || data.length! < 1) {
       throw new NoDataException("The retrieved data is empty");
     }
