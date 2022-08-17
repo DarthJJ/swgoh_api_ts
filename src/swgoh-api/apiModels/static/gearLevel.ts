@@ -1,38 +1,16 @@
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { BaseModel } from "../baseModel";
+import { Character } from "./character";
 
+@Entity({ name: "GearLevel" })
 export class GearLevel extends BaseModel {
-  private _tier: number;
-  private _gear: string[];
-
-  /**
-   * Getter tier
-   * @return {number}
-   */
-  public get tier(): number {
-    return this._tier;
-  }
-
-  /**
-   * Getter gear
-   * @return {string[]}
-   */
-  public get gear(): string[] {
-    return this._gear;
-  }
-
-  /**
-   * Setter tier
-   * @param {number} value
-   */
-  public set tier(value: number) {
-    this._tier = value;
-  }
-
-  /**
-   * Setter gear
-   * @param {string[]} value
-   */
-  public set gear(value: string[]) {
-    this._gear = value;
-  }
+  @PrimaryGeneratedColumn({ name: "id" })
+  id: number;
+  @ManyToOne(() => Character, (character) => character.gear_levels, { eager: true })
+  @JoinColumn([{ name: "character_id", referencedColumnName: "_base_id" }])
+  character: Character;
+  @Column({ name: "Tier" })
+  tier: number;
+  @Column({ name: "Gear", type: "simple-array" })
+  gear: string[];
 }

@@ -1,22 +1,40 @@
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { BaseModel } from "../baseModel";
 import { GearLevel } from "./gearLevel";
 
+@Entity("Characters")
 export class Character extends BaseModel {
-  private _name: string;
+  @PrimaryColumn({ name: "BaseId" })
   private _base_id: string;
+  @Column({ name: "Name" })
+  private _name: string;
+  @Column({ name: "PK" })
   private _pk: number;
+  @Column({ name: "URL" })
   private _url: string;
+  @Column({ name: "Image" })
   private _image: string;
+  @Column({ name: "Power" })
   private _power: number;
+  @Column({ name: "Description" })
   private _description: string;
+  @Column({ name: "CombatType" })
   private _combat_type: number;
-  private _gear_level: GearLevel[];
+  @OneToMany(() => GearLevel, (gearLevel) => gearLevel.character, { cascade: ["insert", "update"] })
+  private _gear_levels: GearLevel[];
+  @Column({ name: "Alignment" })
   private _alignment: string;
+  @Column({ name: "Categories", type: "simple-array" })
   private _categories: string[];
+  @Column({ name: "AbilityClasses", type: "simple-array" })
   private _ability_classes: string[];
+  @Column({ name: "Role" })
   private _role: string;
+  @Column({ name: "Ship", nullable: true })
   private _ship: string;
+  @Column({ name: "ShipSlot", nullable: true })
   private _ship_slot: string;
+  @Column({ name: "ActivateShardCount" })
   private _activate_shard_count: number;
 
   /**
@@ -87,8 +105,8 @@ export class Character extends BaseModel {
    * Getter gear_level
    * @return {GearLevel[]}
    */
-  public get gear_level(): GearLevel[] {
-    return this._gear_level;
+  public get gear_levels(): GearLevel[] {
+    return this._gear_levels;
   }
 
   /**
@@ -215,8 +233,8 @@ export class Character extends BaseModel {
    * Setter gear_level
    * @param {GearLevel[]} value
    */
-  public set gear_level(value: GearLevel[]) {
-    this._gear_level = value;
+  public set gear_levels(value: GearLevel[]) {
+    this._gear_levels = value;
   }
 
   /**

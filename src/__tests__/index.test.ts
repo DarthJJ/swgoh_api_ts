@@ -1,29 +1,20 @@
-import { Retriever } from "../swgoh-api/http/retriever";
+import { AppDataSource } from "../../data-source";
+import { ToUpdate } from "../swgoh-api/apiManager";
+import { SwgohApi } from "../swgohApi";
 
-test("Retrieve Characters", async () => {
-  const retriever = new Retriever();
-  const data = await retriever.characters();
-  expect(data).not.toBeNull();
-  expect(data.length).toBeGreaterThan(0);
-});
-
-test("Retrieve Ships", async () => {
-  const retriever = new Retriever();
-  const data = await retriever.ships();
-  expect(data).not.toBeNull();
-  expect(data.length).toBeGreaterThan(0);
-});
-
-test("Retrieve Abilities", async () => {
-  const retriever = new Retriever();
-  const data = await retriever.abilities();
-  expect(data).not.toBeNull();
-  expect(data.length).toBeGreaterThan(0);
-});
-
-test("Retrieve Player", async () => {
-  const retriever = new Retriever();
-  const data = await retriever.player(393333993);
-  console.log(data);
-  expect(data).not.toBeNull();
+jest.setTimeout(20000);
+test("Retrieve and save Characters", async () => {
+  const database = AppDataSource;
+  try {
+    await database.initialize().catch((error) => {
+      console.error(error);
+      throw error;
+    });
+    const swgohApi = new SwgohApi({ database: database });
+    await swgohApi.updateStaticData(ToUpdate.CHARACTERS);
+    await database.destroy();
+  } catch (exception: unknown) {
+    console.error(exception);
+    expect(exception).toBeNull();
+  }
 });
