@@ -3,4 +3,5 @@ export interface iDao<T> {
   save(object: T): Promise<void>;
   saveAll(object: T[]): Promise<void>;
   delete(id: number | string): Promise<void>;
+  exists(id: string): Promise<boolean>;
 }

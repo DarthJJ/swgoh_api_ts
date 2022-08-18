@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
-import { BaseModel } from "../baseModel";
+import { BaseModel } from "../../baseModel";
 import { GearLevel } from "./gearLevel";
+import { Ability } from "../shared/ability";
 
 @Entity("Characters")
 export class Character extends BaseModel {
@@ -20,7 +21,7 @@ export class Character extends BaseModel {
   private _description: string;
   @Column({ name: "CombatType" })
   private _combat_type: number;
-  @OneToMany(() => GearLevel, (gearLevel) => gearLevel.character, { cascade: ["insert", "update"] })
+  @OneToMany(() => GearLevel, (gearLevel) => gearLevel.character, { cascade: true })
   private _gear_levels: GearLevel[];
   @Column({ name: "Alignment" })
   private _alignment: string;
@@ -36,14 +37,8 @@ export class Character extends BaseModel {
   private _ship_slot: string;
   @Column({ name: "ActivateShardCount" })
   private _activate_shard_count: number;
-
-  /**
-   * Getter name
-   * @return {string}
-   */
-  public get name(): string {
-    return this._name;
-  }
+  @OneToMany(() => Ability, (ability) => ability.base_id, { nullable: true, eager: true })
+  abilities: Ability[];
 
   /**
    * Getter base_id
@@ -51,6 +46,14 @@ export class Character extends BaseModel {
    */
   public get base_id(): string {
     return this._base_id;
+  }
+
+  /**
+   * Getter name
+   * @return {string}
+   */
+  public get name(): string {
+    return this._name;
   }
 
   /**
@@ -102,7 +105,7 @@ export class Character extends BaseModel {
   }
 
   /**
-   * Getter gear_level
+   * Getter gear_levels
    * @return {GearLevel[]}
    */
   public get gear_levels(): GearLevel[] {
@@ -151,9 +154,9 @@ export class Character extends BaseModel {
 
   /**
    * Getter ship_slot
-   * @return {any}
+   * @return {string}
    */
-  public get ship_slot(): any {
+  public get ship_slot(): string {
     return this._ship_slot;
   }
 
@@ -166,19 +169,19 @@ export class Character extends BaseModel {
   }
 
   /**
-   * Setter name
-   * @param {string} value
-   */
-  public set name(value: string) {
-    this._name = value;
-  }
-
-  /**
    * Setter base_id
    * @param {string} value
    */
   public set base_id(value: string) {
     this._base_id = value;
+  }
+
+  /**
+   * Setter name
+   * @param {string} value
+   */
+  public set name(value: string) {
+    this._name = value;
   }
 
   /**
@@ -230,7 +233,7 @@ export class Character extends BaseModel {
   }
 
   /**
-   * Setter gear_level
+   * Setter gear_levels
    * @param {GearLevel[]} value
    */
   public set gear_levels(value: GearLevel[]) {
@@ -279,9 +282,9 @@ export class Character extends BaseModel {
 
   /**
    * Setter ship_slot
-   * @param {any} value
+   * @param {string} value
    */
-  public set ship_slot(value: any) {
+  public set ship_slot(value: string) {
     this._ship_slot = value;
   }
 

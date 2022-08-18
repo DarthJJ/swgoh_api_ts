@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { BaseModel } from "../baseModel";
+import { BaseModel } from "../../baseModel";
 import { Character } from "./character";
 
 @Entity({ name: "GearLevel" })

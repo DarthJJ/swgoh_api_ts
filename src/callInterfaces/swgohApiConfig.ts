@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
 
-export interface Config {
+export interface SwgohApiConfig {
   database: DataSource;
 }

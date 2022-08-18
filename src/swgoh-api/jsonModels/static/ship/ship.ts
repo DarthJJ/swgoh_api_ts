@@ -1,27 +1,37 @@
-import { BaseModel } from "../baseModel";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { BaseModel } from "../../baseModel";
+import { Ability } from "../shared/ability";
 
+@Entity("Ships")
 export class Ship extends BaseModel {
-  private _name: string;
+  @PrimaryColumn({ name: "BaseId" })
   private _base_id: string;
+  @Column({ name: "Name" })
+  private _name: string;
+  @Column({ name: "URL" })
   private _url: string;
+  @Column({ name: "Image" })
   private _image: string;
+  @Column({ name: "Power" })
   private _power: number;
+  @Column({ name: "Description" })
   private _description: string;
-  private _combat_tpe: number;
+  @Column({ name: "CombatType" })
+  private _combat_type: number;
+  @Column({ name: "Alignment" })
   private _alignment: string;
+  @Column({ name: "Categories", type: "simple-array" })
   private _categories: string[];
+  @Column({ name: "AbilityClasses", type: "simple-array" })
   private _ability_classes: string[];
+  @Column({ name: "Role" })
   private _role: string;
+  @Column({ name: "CapitalShip" })
   private _capital_ship: boolean;
-  private _active_shard_count: number;
-
-  /**
-   * Getter name
-   * @return {string}
-   */
-  public get name(): string {
-    return this._name;
-  }
+  @Column({ name: "ActivateShardCount" })
+  private _activate_shard_count: number;
+  @OneToMany(() => Ability, (ability) => ability.base_id, { nullable: true, eager: true })
+  abilities: Ability[];
 
   /**
    * Getter base_id
@@ -29,6 +39,14 @@ export class Ship extends BaseModel {
    */
   public get base_id(): string {
     return this._base_id;
+  }
+
+  /**
+   * Getter name
+   * @return {string}
+   */
+  public get name(): string {
+    return this._name;
   }
 
   /**
@@ -64,11 +82,11 @@ export class Ship extends BaseModel {
   }
 
   /**
-   * Getter combat_tpe
+   * Getter combat_type
    * @return {number}
    */
-  public get combat_tpe(): number {
-    return this._combat_tpe;
+  public get combat_type(): number {
+    return this._combat_type;
   }
 
   /**
@@ -112,19 +130,11 @@ export class Ship extends BaseModel {
   }
 
   /**
-   * Getter active_shard_count
+   * Getter activate_shard_count
    * @return {number}
    */
-  public get active_shard_count(): number {
-    return this._active_shard_count;
-  }
-
-  /**
-   * Setter name
-   * @param {string} value
-   */
-  public set name(value: string) {
-    this._name = value;
+  public get activate_shard_count(): number {
+    return this._activate_shard_count;
   }
 
   /**
@@ -133,6 +143,14 @@ export class Ship extends BaseModel {
    */
   public set base_id(value: string) {
     this._base_id = value;
+  }
+
+  /**
+   * Setter name
+   * @param {string} value
+   */
+  public set name(value: string) {
+    this._name = value;
   }
 
   /**
@@ -168,11 +186,11 @@ export class Ship extends BaseModel {
   }
 
   /**
-   * Setter combat_tpe
+   * Setter combat_type
    * @param {number} value
    */
-  public set combat_tpe(value: number) {
-    this._combat_tpe = value;
+  public set combat_type(value: number) {
+    this._combat_type = value;
   }
 
   /**
@@ -216,10 +234,10 @@ export class Ship extends BaseModel {
   }
 
   /**
-   * Setter active_shard_count
+   * Setter activate_shard_count
    * @param {number} value
    */
-  public set active_shard_count(value: number) {
-    this._active_shard_count = value;
+  public set activate_shard_count(value: number) {
+    this._activate_shard_count = value;
   }
 }

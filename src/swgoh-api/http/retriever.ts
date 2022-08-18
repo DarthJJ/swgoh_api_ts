@@ -2,12 +2,12 @@ import "reflect-metadata";
 import { NoDataException } from "../../exceptions/noDataException";
 import { RetrieveException } from "../../exceptions/retrieveException";
 import { SerializeException } from "../../exceptions/serializeException";
-import { BaseModel } from "../apiModels/baseModel";
-import { Character } from "../apiModels/static/character";
+import { BaseModel } from "../jsonModels/baseModel";
+import { Player } from "../jsonModels/player/player";
+import { Ability } from "../jsonModels/static/shared/ability";
+import { Character } from "../jsonModels/static/character/character";
+import { Ship } from "../jsonModels/static/ship/ship";
 import { EndPoints } from "./endPoints";
-import { Ship } from "../apiModels/static/ship";
-import { Ability } from "../apiModels/static/ability";
-import { Player } from "../apiModels/player/player";
 
 export class Retriever {
   private readonly baseApiUrl: string = "https://swgoh.gg/api/";

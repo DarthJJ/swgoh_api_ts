@@ -1,20 +1,41 @@
-import { BaseModel } from "../baseModel";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { BaseModel } from "../../baseModel";
+import { Character } from "../character/character";
+import { Ship } from "../ship/ship";
 
+@Entity("Abilities")
 export class Ability extends BaseModel {
+  @PrimaryColumn({ name: "BaseId" })
   private _base_id: string;
+  @Column({ name: "Name" })
   private _name: string;
+  @Column({ name: "Image" })
   private _image: string;
+  @Column({ name: "URL", nullable: true })
   private _url: string;
+  @Column({ name: "TierMax" })
   private _tier_max: number;
+  @Column({ name: "IsZeta" })
   private _is_zeta: boolean;
+  @Column({ name: "IsOmega" })
   private _is_omega: boolean;
+  @Column({ name: "IsOmicron" })
   private _is_omicron: boolean;
+  @Column({ name: "Description", type: "longtext" })
   private _description: string;
+  @Column({ name: "CombatType" })
   private _combat_type: number;
+  @Column({ name: "OmicronMode", nullable: true })
   private _omicron_mode: number;
+  @Column({ name: "Type", nullable: true })
   private _type: number;
+  @ManyToOne(() => Character, (character) => character.base_id, { nullable: true })
+  @JoinColumn({ name: "characterBaseId", foreignKeyConstraintName: "FK_characterBaseId" })
   private _character_base_id: string;
+  @ManyToOne(() => Ship, (ship) => ship.base_id, { nullable: true })
+  @JoinColumn({ name: "shipBaseId", foreignKeyConstraintName: "FK_shipBaseId" })
   private _ship_base_id: string;
+  @Column({ name: "OmicronBattleTpes", type: "simple-array" })
   private _omicron_battle_types: string[];
 
   /**

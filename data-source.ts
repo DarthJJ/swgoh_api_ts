@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  entities: ["src/swgoh-api/apiModels/static/**/*.ts"],
+  entities: ["src/swgoh-api/jsonModels/static/**/*.ts", "src/models/**/*.ts"],
   migrations: ["./migrations/**/*.ts"],
   database: "testlib",
   dropSchema: true,
@@ -11,5 +11,5 @@ export const AppDataSource = new DataSource({
   port: 3306,
   username: "testlib",
   password: "testlib",
-  logging: ["error", "warn", "query"],
+  logging: ["error", "warn"],
 });

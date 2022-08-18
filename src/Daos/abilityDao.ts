@@ -1,32 +1,52 @@
-// import { Repository } from "typeorm";
-// import { DatabaseError } from "../../exceptions/databaseError.js";
-// import { Ability } from "../../models/swgoh/ability.js";
-// import { iDao } from "./iDao.js";
+import { Repository } from "typeorm";
 
-// export class AbilityDao implements iDao<Ability> {
-//   private readonly _database: Repository<Ability>;
+import { iDao } from "./iDao";
+import { Ability } from "../swgoh-api/jsonModels/static/shared/ability";
+import { DbSaveException } from "../exceptions/dbSaveException";
+import { DbRetrieveException } from "../exceptions/dbRetrieveException";
 
-//   constructor(database: Repository<Ability>) {
-//     this._database = database;
-//   }
-//   getById(id: string | number): Promise<Ability | null> {
-//     throw new Error("Method not implemented.");
-//   }
-//   async save(object: Ability): Promise<void> {
-//     try {
-//       await this._database.save(object);
-//     } catch (exception: unknown) {
-//       throw new DatabaseError("Something went wrong saving the ability", exception);
-//     }
-//   }
+export class AbilityDao implements iDao<Ability> {
+  private readonly _database: Repository<Ability>;
 
-//   async saveAll(object: Ability[]): Promise<void> {
-//     for (var ability of object) {
-//       await this.save(ability);
-//     }
-//   }
+  constructor(database: Repository<Ability>) {
+    this._database = database;
+  }
 
-//   delete(id: string | number): Promise<void> {
-//     throw new Error("Method not implemented.");
-//   }
-// }
+  async exists(id: string): Promise<boolean> {
+    try {
+      const data = await this.getById(id);
+      return data != null;
+    } catch {
+      return false;
+    }
+  }
+
+  async getById(id: string): Promise<Ability | null> {
+    try {
+      return await this._database.findOne({
+        where: {
+          base_id: id,
+        },
+      });
+    } catch (exception: unknown) {
+      throw new DbRetrieveException("Something went wrong retrieving the character", exception);
+    }
+  }
+  async save(object: Ability): Promise<void> {
+    try {
+      await this._database.save(object);
+    } catch (exception: unknown) {
+      throw new DbSaveException("Something went wrong saving the ability", exception);
+    }
+  }
+
+  async saveAll(object: Ability[]): Promise<void> {
+    for (var ability of object) {
+      await this.save(ability);
+    }
+  }
+
+  delete(id: string | number): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+}
