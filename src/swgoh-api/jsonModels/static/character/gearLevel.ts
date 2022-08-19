@@ -6,8 +6,8 @@ import { Character } from "./character";
 export class GearLevel extends BaseModel {
   @PrimaryGeneratedColumn({ name: "id" })
   id: number;
-  @ManyToOne(() => Character, (character) => character.gear_levels, { eager: true })
-  @JoinColumn([{ name: "character_id", referencedColumnName: "_base_id" }])
+  @ManyToOne(() => Character, (character) => character.gear_levels)
+  // @JoinColumn([{ name: "character_id", referencedColumnName: "base_id" }])
   character: Character;
   @Column({ name: "Tier" })
   tier: number;

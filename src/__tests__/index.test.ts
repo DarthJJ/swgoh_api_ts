@@ -30,8 +30,9 @@ jest.setTimeout(20000);
 
 test("Retrieve Player data", async () => {
   try {
-    // await swgohApi.updateStaticData(ToUpdate.ALL);
-    await swgohApi.updateStaticData(ToUpdate.CHARACTERS);
+    await swgohApi.updateStaticData(ToUpdate.ALL);
+    const toon = await swgohApi.characters.getById("SUPREMELEADERKYLOREN", true);
+    const ship = await swgohApi.ships.getById("ARC170REX", true);
     const profile = await swgohApi.getPlayer({ allycode: 393333993, update: true });
     console.log(profile);
   } catch (exception: unknown) {

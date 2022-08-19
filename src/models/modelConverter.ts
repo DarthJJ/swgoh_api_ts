@@ -29,11 +29,13 @@ export class ModelConverter {
         const converted = this.convertCharacter(unit);
         converted.profile = output;
         output.characters.push(converted);
+        continue;
       }
       if (await this._database.isShip(unit.data.base_id)) {
         const converted = this.convertShip(unit);
-        // converted.allycode = output.allycode;
+        converted.profile = output;
         output.ships.push(converted);
+        continue;
       }
     }
   }

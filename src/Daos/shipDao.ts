@@ -12,20 +12,24 @@ export class ShipDao implements iDao<Ship> {
 
   async exists(id: string): Promise<boolean> {
     try {
-      const data = await this.getById(id);
+      const data = await this.getById(id, false);
       return data != null;
     } catch {
       return false;
     }
   }
 
-  async getById(id: string): Promise<Ship | null> {
+  async getById(id: string, eager: boolean): Promise<Ship | null> {
     try {
-      return await this._database.findOne({
+      const ship = await this._database.findOne({
         where: {
           base_id: id,
         },
+        relations: {
+          abilities: eager,
+        },
       });
+      return ship;
     } catch (exception: unknown) {
       throw new DbRetrieveException("Something went wrong retrieving the character", exception);
     }
