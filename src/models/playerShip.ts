@@ -9,6 +9,6 @@ export class PlayerShip {
   @Column({ name: "BaseId" })
   baseId: string;
 
-  @ManyToOne(() => Profile, (profile) => profile.ships, { eager: true })
-  profile: Profile;
+  @ManyToOne(() => Profile, (profile) => profile.allycode, { eager: true })
+  profileAllycode: number;
 }

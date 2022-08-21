@@ -14,13 +14,14 @@ export class ProfileDao implements iDao<Profile> {
   async getById(id: number): Promise<Profile> {
     try {
       // return await this._database.createQueryBuilder("profile").leftJoinAndSelect("profile.characters", "character").where("Allycode = :id", { id }).getOne();
-      return await this._database.findOne({
+      const profile = await this._database.findOne({
         where: { allycode: id },
         relations: {
           characters: true,
           ships: true,
         },
       });
+      return profile;
     } catch (exception: unknown) {
       throw new DbRetrieveException("Something went wrong retrieving the profile", exception);
     }

@@ -27,13 +27,13 @@ export class ModelConverter {
     for (const unit of input) {
       if (await this._database.isCharacter(unit.data.base_id)) {
         const converted = this.convertCharacter(unit);
-        converted.profile = output;
+        converted.profileAllycode = output.allycode;
         output.characters.push(converted);
         continue;
       }
       if (await this._database.isShip(unit.data.base_id)) {
         const converted = this.convertShip(unit);
-        converted.profile = output;
+        converted.profileAllycode = output.allycode;
         output.ships.push(converted);
         continue;
       }

@@ -6,9 +6,9 @@ import { PlayerShip } from "./playerShip";
 export class Profile {
   @PrimaryColumn()
   allycode: number;
-  @OneToMany(() => PlayerCharacter, (playerCharacter) => playerCharacter.profile, { cascade: true })
+  @OneToMany(() => PlayerCharacter, (playerCharacter) => playerCharacter.profileAllycode, { cascade: true })
   characters: PlayerCharacter[];
-  @OneToMany(() => PlayerShip, (playerShip) => playerShip.profile, { cascade: true })
+  @OneToMany(() => PlayerShip, (playerShip) => playerShip.profileAllycode, { cascade: true })
   ships: PlayerShip[];
 
   public init() {
