@@ -21,7 +21,7 @@ export class Character extends BaseModel {
   description: string;
   @Column()
   combat_type: number;
-  @OneToMany(() => GearLevel, (gearLevel) => gearLevel.character, { cascade: true })
+  @OneToMany(() => GearLevel, (gearLevel) => gearLevel.character_base_id, { cascade: true })
   gear_levels: GearLevel[];
   @Column()
   alignment: string;

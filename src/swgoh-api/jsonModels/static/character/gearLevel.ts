@@ -8,7 +8,7 @@ export class GearLevel extends BaseModel {
   id: number;
   @ManyToOne(() => Character, (character) => character.gear_levels)
   // @JoinColumn([{ name: "character_id", referencedColumnName: "base_id" }])
-  character: Character;
+  character_base_id: string;
   @Column({ name: "Tier" })
   tier: number;
   @Column({ name: "Gear", type: "simple-array" })
